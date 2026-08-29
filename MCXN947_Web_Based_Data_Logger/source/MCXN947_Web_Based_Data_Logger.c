@@ -15,9 +15,13 @@
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "fsl_debug_console.h"
+#include "task.h"
+#include "temp.h"
+#include "I2C_service.h"
 /* TODO: insert other include files here. */
 
 /* TODO: insert other definitions and declarations here. */
+
 
 /*
  * @brief   Application entry point.
@@ -33,16 +37,21 @@ int main(void) {
     BOARD_InitDebugConsole();
 #endif
 
-    PRINTF("Hello World\r\n");
+    PRINTF("\r\n");
+	PRINTF("========================================\r\n");
+	PRINTF("     MCXN947 WEB-BASED DATA LOGGER\r\n");
+	PRINTF("========================================\r\n");
 
-    /* Force the counter to be placed into memory. */
-    volatile static int i = 0 ;
-    /* Enter an infinite loop, just incrementing a counter. */
-    while(1) {
-        i++ ;
-        /* 'Dummy' NOP to allow source level single stepping of
-            tight while() loop */
-        __asm volatile ("nop");
-    }
-    return 0 ;
+	PRINTF("[BOOT] Board initialization started\r\n");
+
+	Init_I2C_service();
+
+	PRINTF("[APP ] Application initialization started\r\n");
+
+	Init_Temperature_TASK();
+
+    PRINTF("[RTOS] Starting FreeRTOS scheduler...\r\n");
+    PRINTF("========================================\r\n");
+    vTaskStartScheduler();
+    for (;;);
 }

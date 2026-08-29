@@ -31,6 +31,11 @@ extern "C" {
  */
 void BOARD_InitBootPins(void);
 
+/*!
+ * @brief Configures pin routing and optionally pin electrical features.
+ *
+ */
+void LPI2C2_InitPins(void);
 /*! @name PORT1_8 (coord A1), P1_8/J9[32]
   @{ */
 
