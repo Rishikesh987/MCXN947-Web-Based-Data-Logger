@@ -1,1 +1,8 @@
 /.metadata/
+
+# MCUXpresso example projects
+frdmmcxn947_freertos_hello_cm33_core0/
+frdmmcxn947_lwip_httpsrv_freertos_cm33_core0/
+
+# MCUXpresso IDE generated package support
+.mcuxpressoide_packages_support/
