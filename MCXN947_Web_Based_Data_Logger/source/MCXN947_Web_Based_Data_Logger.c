@@ -42,7 +42,7 @@ int main(void) {
 	PRINTF("     MCXN947 WEB-BASED DATA LOGGER\r\n");
 	PRINTF("========================================\r\n");
 
-	PRINTF("[BOOT] Board initialization started\r\n");
+	PRINTF("[BOOT] Peripheral initialization started\r\n");
 
 	Init_I2C_service();
 

@@ -46,7 +46,7 @@
 static void Temperature_TASK()
 {
     TickType_t xLastWakeTime;
-    const TickType_t xPeriod = pdMS_TO_TICKS(5000);
+    const TickType_t xPeriod = pdMS_TO_TICKS(1000);
 
     xLastWakeTime = xTaskGetTickCount();
 
@@ -54,7 +54,8 @@ static void Temperature_TASK()
     while (1)
     {
         /* Task1 code */
-
+    	PRINTF("Time: 20%02d-%02d-%02d %02d:%02d:%02d\r\n",
+    	               t.year, t.month, t.date, t.hour, t.min, t.sec);
     	if(temp <= 2500){
     		PRINTF("Temperature ok\r\n");
     	    PRINTF("Temp: %d C   Pressure: %d hPa\r\n", (uint32_t)temp*100, (uint32_t)pressure);
