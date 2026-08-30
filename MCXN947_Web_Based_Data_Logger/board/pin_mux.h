@@ -25,6 +25,12 @@
 extern "C" {
 #endif
 
+
+/*!
+ * @brief Configures pin routing and optionally pin electrical features.
+ *
+ */
+void Etharnet_InitPins(void);
 /*!
  * @brief Calls initialization functions.
  *

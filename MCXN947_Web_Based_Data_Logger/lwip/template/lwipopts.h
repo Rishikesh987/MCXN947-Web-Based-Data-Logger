@@ -308,43 +308,43 @@ void sys_check_core_locking(void);
  * If not desired, define all of these symbols as 1.
  */
 #ifndef CHECKSUM_GEN_IP
-#define CHECKSUM_GEN_IP 0
+#define CHECKSUM_GEN_IP 1
 #endif
 
 #ifndef CHECKSUM_GEN_UDP
-#define CHECKSUM_GEN_UDP 0
+#define CHECKSUM_GEN_UDP 1
 #endif
 
 #ifndef CHECKSUM_GEN_TCP
-#define CHECKSUM_GEN_TCP 0
+#define CHECKSUM_GEN_TCP 1
 #endif
 
 #ifndef CHECKSUM_GEN_ICMP
-#define CHECKSUM_GEN_ICMP 0
+#define CHECKSUM_GEN_ICMP 1
 #endif
 
 #ifndef CHECKSUM_GEN_ICMP6
-#define CHECKSUM_GEN_ICMP6 0
+#define CHECKSUM_GEN_ICMP6 1
 #endif
 
 #ifndef CHECKSUM_CHECK_IP
-#define CHECKSUM_CHECK_IP 0
+#define CHECKSUM_CHECK_IP 1
 #endif
 
 #ifndef CHECKSUM_CHECK_UDP
-#define CHECKSUM_CHECK_UDP 0
+#define CHECKSUM_CHECK_UDP 1
 #endif
 
 #ifndef CHECKSUM_CHECK_TCP
-#define CHECKSUM_CHECK_TCP 0
+#define CHECKSUM_CHECK_TCP 1
 #endif
 
 #ifndef CHECKSUM_CHECK_ICMP
-#define CHECKSUM_CHECK_ICMP 0
+#define CHECKSUM_CHECK_ICMP 1
 #endif
 
 #ifndef CHECKSUM_CHECK_ICMP6
-#define CHECKSUM_CHECK_ICMP6 0
+#define CHECKSUM_CHECK_ICMP6 1
 #endif
 
 /**

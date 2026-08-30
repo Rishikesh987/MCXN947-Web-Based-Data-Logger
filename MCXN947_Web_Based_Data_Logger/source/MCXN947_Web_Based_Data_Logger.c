@@ -18,6 +18,8 @@
 #include "task.h"
 #include "temp.h"
 #include "I2C_service.h"
+#include "ethrnet_service.h"
+
 /* TODO: insert other include files here. */
 
 /* TODO: insert other definitions and declarations here. */
@@ -45,6 +47,7 @@ int main(void) {
 	PRINTF("[BOOT] Peripheral initialization started\r\n");
 
 	Init_I2C_service();
+	Init_ETH_service();
 
 	PRINTF("[APP ] Application initialization started\r\n");
 
