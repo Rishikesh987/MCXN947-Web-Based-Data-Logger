@@ -18,7 +18,8 @@
 #include "fsl_debug_console.h"
 #include "FreeRTOS.h"
 #include "task.h"
-#include "I2C_service.h"
+
+#include "../../services/Analog_service/Analog_service.h"
 /*******************************************************************************
  * Task Configuration
  ******************************************************************************/

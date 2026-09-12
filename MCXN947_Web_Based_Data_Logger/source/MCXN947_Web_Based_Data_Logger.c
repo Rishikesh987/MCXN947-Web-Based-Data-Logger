@@ -16,10 +16,14 @@
 #include "clock_config.h"
 #include "fsl_debug_console.h"
 #include "task.h"
-#include "temp.h"
-#include "I2C_service.h"
-#include "ethrnet_service.h"
 
+/*include service */
+#include "ethrnet_service.h"
+#include "Indectors_service.h"
+/*include app  service */
+#include "temp.h"
+
+#include "../services/Analog_service/Analog_service.h"
 /* TODO: insert other include files here. */
 
 /* TODO: insert other definitions and declarations here. */
@@ -46,12 +50,13 @@ int main(void) {
 
 	PRINTF("[BOOT] Peripheral initialization started\r\n");
 
-	Init_I2C_service();
+	Init_Analog_service();
 	Init_ETH_service();
 
 	PRINTF("[APP ] Application initialization started\r\n");
 
 	Init_Temperature_TASK();
+	Init_Indicator_Task();
 
     PRINTF("[RTOS] Starting FreeRTOS scheduler...\r\n");
     PRINTF("========================================\r\n");
