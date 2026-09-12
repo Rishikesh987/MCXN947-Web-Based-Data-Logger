@@ -26,47 +26,51 @@ SDK/HAL
 🔐 Static IPv4 network configuration
 💻 Browser-based control and monitoring without a dedicated PC application
 
-┌──────────────────────────────────────────────┐
-│              APPLICATION LAYER               │
-│                                              │
-│  Application Task                            │
-│  • System state / business logic             │
-│  • Process web commands                      │
-│  • Decide actuator actions                   │
-│  • Prepare data for logging                  │
-└──────────────────────┬───────────────────────┘
-                       │
-┌──────────────────────▼───────────────────────┐
-│                 SERVICE LAYER                │
-│                                              │
-│  Sensor Service                              │
-│  • Digital / Analog acquisition              │
-│  • Filtering / averaging                     │
-│  • Sensor status / validation                │
-│                                              │
-│  Logger Service                              │
-│  • Data buffering                            │
-│  • Timestamp association                     │
-│  • EEPROM management                         │
-│                                              │
-│  RTC Service                                 │
-│  • DS3231 time/date                          │
-│  • Timestamp generation                      │
-│                                              │
-│  Network / Web Service                       │
-│  • lwIP TCP/IP                               │
-│  • HTTP server                               │
-│  • Web commands / data                       │
-│                                              │
-│  Indicator Service                           │
-│  • System status indication                  │
-└──────────────────────┬───────────────────────┘
-                       │
-┌──────────────────────▼───────────────────────┐
-│             DRIVER / SDK / HAL               │
-│                                              │
-│  I2C Driver    SPI Driver    ADC Driver      │
-│  GPIO Driver  ENET Driver   EEPROM Driver    │
-│                                              │
-│             NXP MCUXpresso SDK               │
-└──────────────────────────────────────────────┘
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                             APPLICATION LAYER                               │
+│                                                                             │
+│  Application Task (Central Business Logic Thread)                          │
+│  • Manages system state machine transitions                                 │
+│  • Parses and executes incoming web dashboard commands                      │
+│  • Determines local actuator/device control operations                      │
+│  • Formats and prepares raw metrics for the logging queue                   │
+└──────────────────────────────────────┬──────────────────────────────────────┘
+                                       │
+┌──────────────────────────────────────▼──────────────────────────────────────┐
+│                               SERVICE LAYER                                 │
+│                                                                             │
+│  📡 Sensor Service                                                          │
+│  • Coordinates digital & analog sensor data acquisition                      │
+│  • Handles averaging, filtering, and signal noise removal                   │
+│  • Conducts boundary verification & sensor hardware validation              │
+│                                                                             │
+│  💾 Logger Service                                                          │
+│  • Manages internal RAM circular data buffering                             │
+│  • Binds raw sensor readings to valid RTC calendar timestamps               │
+│  • Handles page-write scheduling for the external EEPROM                    │
+│                                                                             │
+│  🕒 RTC Service                                                             │
+│  • Controls the physical DS3231 timekeeping hardware tracking module        │
+│  • Generates accurate timezone-bound epoch/calendar timestamp arrays        │
+│                                                                             │
+│  🌐 Network / Web Service                                                   │
+│  • Manages the raw lwIP TCP/IP stack configuration frameworks               │
+│  • Implements a lightweight HTTP network background server daemon           │
+│  • Facilitates asynchronous browser-to-MCU JSON data exchanges              │
+│                                                                             │
+│  💡 Indicator Service                                                       │
+│  • Decouples state monitoring from physical visualization                   │
+│  • Operates dynamic multi-frequency system status blink codes               │
+└──────────────────────────────────────┬──────────────────────────────────────┘
+                                       │
+┌──────────────────────────────────────▼──────────────────────────────────────┐
+│                        DRIVER / SDK / HAL LAYER                             │
+│                                                                             │
+│   🎛️ I2C Driver     🎛️ SPI Driver     🔌 ADC Driver                          │
+│   🔌 GPIO Driver    🌐 ENET Driver    💾 EEPROM Driver                       │
+│                                                                             │
+│                      🛠️ NXP MCUXpresso SDK & HAL                            │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
