@@ -31,7 +31,7 @@ SDK/HAL
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                             APPLICATION LAYER                               │
 │                                                                             │
-│  Application Task (Central Business Logic Thread)                          │
+│  Application Task (Central Business Logic Thread)                           │
 │  • Manages system state machine transitions                                 │
 │  • Parses and executes incoming web dashboard commands                      │
 │  • Determines local actuator/device control operations                      │
@@ -42,7 +42,7 @@ SDK/HAL
 │                               SERVICE LAYER                                 │
 │                                                                             │
 │  📡 Sensor Service                                                          │
-│  • Coordinates digital & analog sensor data acquisition                      │
+│  • Coordinates digital & analog sensor data acquisition                     │
 │  • Handles averaging, filtering, and signal noise removal                   │
 │  • Conducts boundary verification & sensor hardware validation              │
 │                                                                             │
@@ -68,8 +68,8 @@ SDK/HAL
 ┌──────────────────────────────────────▼──────────────────────────────────────┐
 │                        DRIVER / SDK / HAL LAYER                             │
 │                                                                             │
-│   🎛️ I2C Driver     🎛️ SPI Driver     🔌 ADC Driver                          │
-│   🔌 GPIO Driver    🌐 ENET Driver    💾 EEPROM Driver                       │
+│   🎛️ I2C Driver     🎛️ SPI Driver     🔌 ADC Driver                         │
+│   🔌 GPIO Driver    🌐 ENET Driver    💾 EEPROM Driver                      │
 │                                                                             │
 │                      🛠️ NXP MCUXpresso SDK & HAL                            │
 └─────────────────────────────────────────────────────────────────────────────┘
