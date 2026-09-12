@@ -18,48 +18,50 @@
 #include "task.h"
 
 /*include service */
+#include "HealthMonitor_service.h"
+#include "Analog_service.h"
 #include "ethrnet_service.h"
-#include "Indectors_service.h"
+
 /*include app  service */
+#include "Indectors_service.h"
 #include "temp.h"
 
-#include "../services/Analog_service/Analog_service.h"
 /* TODO: insert other include files here. */
 
 /* TODO: insert other definitions and declarations here. */
-
 
 /*
  * @brief   Application entry point.
  */
 int main(void) {
 
-    /* Init board hardware. */
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitBootPeripherals();
+	/* Init board hardware. */
+	BOARD_InitBootPins();
+	BOARD_InitBootClocks();
+	BOARD_InitBootPeripherals();
 #ifndef BOARD_INIT_DEBUG_CONSOLE_PERIPHERAL
-    /* Init FSL debug console. */
-    BOARD_InitDebugConsole();
+	/* Init FSL debug console. */
+	BOARD_InitDebugConsole();
 #endif
 
-    PRINTF("\r\n");
+	PRINTF("\r\n");
 	PRINTF("========================================\r\n");
 	PRINTF("     MCXN947 WEB-BASED DATA LOGGER\r\n");
 	PRINTF("========================================\r\n");
 
 	PRINTF("[BOOT] Peripheral initialization started\r\n");
-
+	Init_HealthMonitor_service();
 	Init_Analog_service();
 	Init_ETH_service();
 
 	PRINTF("[APP ] Application initialization started\r\n");
 
-	Init_Temperature_TASK();
 	Init_Indicator_Task();
+	Init_Temperature_TASK();
 
-    PRINTF("[RTOS] Starting FreeRTOS scheduler...\r\n");
-    PRINTF("========================================\r\n");
-    vTaskStartScheduler();
-    for (;;);
+	PRINTF("[RTOS] Starting FreeRTOS scheduler...\r\n");
+	PRINTF("========================================\r\n");
+	vTaskStartScheduler();
+	for (;;)
+		;
 }

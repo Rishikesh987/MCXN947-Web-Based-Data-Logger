@@ -18,7 +18,7 @@
 #include "fsl_debug_console.h"
 #include "FreeRTOS.h"
 #include "task.h"
-
+#include "HealthMonitor_service.h"
 #include "../../services/Analog_service/Analog_service.h"
 /*******************************************************************************
  * Task Configuration
@@ -30,8 +30,8 @@
 /* Stack size allocated for the temperature task.*/
 #define TASK_1_STACK_SIZE  200
 
-
-
+TaskHandle_t App_Handle = NULL; /* Application task handle */
+static uint8_t App_TaskId;
 /*******************************************************************************
  * Temperature Task
  ******************************************************************************/
@@ -47,13 +47,17 @@
 static void Temperature_TASK()
 {
     TickType_t xLastWakeTime;
-    const TickType_t xPeriod = pdMS_TO_TICKS(1000);
+    const TickType_t xPeriod = pdMS_TO_TICKS(100);
+    uint32_t receivedBits = 0;
 
     xLastWakeTime = xTaskGetTickCount();
 
     PRINTF("Temperature task running \r\n");
     while (1)
     {
+        if (xTaskNotifyWait(0x00, 0xFFFFFFFF, &receivedBits, 0) == pdPASS) {
+            Reset_HeltMonit_service(App_TaskId); /* Reset the health monitor service for this task */
+        }
         /* Task1 code */
     	PRINTF("Time: 20%02d-%02d-%02d %02d:%02d:%02d\r\n",
     	               t.year, t.month, t.date, t.hour, t.min, t.sec);
@@ -86,7 +90,10 @@ void Init_Temperature_TASK(){
 
 	PRINTF("[RTOS] Creating Temperature Application Task...\r\n");
 
-    if (xTaskCreate(Temperature_TASK, "Temperature_TASK", TASK_1_STACK_SIZE, NULL, TASK_1_PRIORITY, NULL) !=
+	/* Register application task with health monitor - 300ms timeout */
+	App_TaskId = Registor_service("Temperature_TASK", 300, true, &App_Handle);
+
+    if (xTaskCreate(Temperature_TASK, "Temperature_TASK", TASK_1_STACK_SIZE, NULL, TASK_1_PRIORITY, &App_Handle) !=
         pdPASS)
     {
     	PRINTF("[RTOS][ERROR] Temperature task creation FAILED!\r\n");

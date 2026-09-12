@@ -8,7 +8,6 @@
  * LED, not WHY (that's app level's job). Calls down into led_driver.h only.
  */
 
-
 #ifndef INDECTORS_SERVICE_INDECTORS_SERVICE_H_
 #define INDECTORS_SERVICE_INDECTORS_SERVICE_H_
 
@@ -31,9 +30,17 @@ void Init_Indicator_Task(void);
 
 /* What each of the 11 LEDs actually means in your system - EDIT names */
 enum {
-    LED_SYSTEM = 0,
-    LED_1, LED_2, LED_3, LED_4, LED_5,
-    LED_6, LED_7, LED_8, LED_9, LED_10
+	LED_SYSTEM = 0,
+	LED_1,
+	LED_2,
+	LED_3,
+	LED_4,
+	LED_5,
+	LED_6,
+	LED_7,
+	LED_8,
+	LED_9,
+	LED_10
 };
 
 #endif /* INDECTORS_SERVICE_INDECTORS_SERVICE_H_ */

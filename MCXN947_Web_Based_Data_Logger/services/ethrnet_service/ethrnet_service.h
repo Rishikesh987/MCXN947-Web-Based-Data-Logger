@@ -14,10 +14,6 @@
  * Definitions
  ******************************************************************************/
 
-
-
-
-
 void Init_ETH_service(void);
 
 #endif /* ETHRNET_SERVICE_ETHRNET_SERVICE_H_ */

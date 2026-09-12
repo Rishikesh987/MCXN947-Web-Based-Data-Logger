@@ -25,7 +25,11 @@
 extern "C" {
 #endif
 
-
+/*!
+ * @brief Configures WWDT INIT.
+ *
+ */
+void WWDTclk_Init();
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
  *
