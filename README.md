@@ -3,30 +3,28 @@
 MCXN947-based IoT embedded system using FreeRTOS and lwIP Ethernet networking, with a web-based interface for real-time sensor monitoring, RTC timestamped data logging, EEPROM historical storage, and remote control, implemented using a layered driver/service/application architecture.
 
 
+## Key Features
 
-## ***Key Features***   
-🌐 Ethernet-based IoT communication    
-🖥️ Embedded Web Server running directly on MCXN947   
-📡 TCP/IP networking using lwIP  
-⚙️ FreeRTOS-based multitasking  
-🌡️ Real-time temperature and pressure monitoring using BMP280/BME280  
-🕒 RTC timestamping using DS3231  
-💾 Historical sensor data logging to external EEPROM  
-📊 Web-based sensor data visualization  
-🔄 Real-time data communication between MCU and browser  
-🎛️ Remote control of actuators/devices through the web interface  
-💡 LED status indication using a dedicated FreeRTOS task  
-🔌 Custom I²C and GPIO drivers  
-🧩 Layered software architecture  
-Application layer  
-Service layer  
-Driver layer  
-SDK/HAL  
-🔧 Modular and reusable driver/service design  
-⏱️ Periodic task execution using FreeRTOS  
-🛠️ NXP MCUXpresso SDK integration  
-🔐 Static IPv4 network configuration  
-💻 Browser-based control and monitoring without a dedicated PC application  
+* 🌐 **Ethernet-based IoT communication:** Reliable data transfer over physical networks.
+* 🖥️ **Embedded Web Server:** Serves dashboard interfaces running directly on the MCXN947.
+* 📡 **TCP/IP networking using lwIP:** Optimized lightweight embedded protocol stack suite.
+* ⚙️ **FreeRTOS-based multitasking:** Fully deterministic scheduling across all application components.
+* 🌡️ **Real-Time Monitoring:** Dual temperature and pressure monitoring via BMP280/BME280.
+* 🕒 **RTC Timestamping:** High-accuracy chronological indexing via an external DS3231.
+* 💾 **Historical Sensor Data Logging:** Secure, permanent storage logging to an external EEPROM.
+* 📊 **Web-Based Visualization:** Browser-native real-time charts without needing a dedicated PC utility.
+* 🔄 **Bi-Directional Communication:** Real-time data sync and web interface control parameters.
+* 🎛️ **Remote Control Interfacing:** Trigger and drive hardware actuators directly from web dashboards.
+* 💡 **Dedicated Indicator Service:** Modular system health monitoring using visual LED blink status algorithms.
+* 🔌 **Custom Hardware Abstraction:** Modular custom I²C and GPIO peripheral driver frameworks.
+* 🧩 **Layered Software Architecture:** Complete modular separation of tasks:
+  * 🖥️ `Application Layer` — Business logic & system state management.
+  * ⚙️ `Service Layer` — Protocol processing, caching, and data translation buffers.
+  * 🔌 `Driver / SDK / HAL` — Direct register-level NXP MCUXpresso interaction.
+* 🔧 **Modular Frameworks:** Reusable and decoupled architecture designed for painless maintenance blocks.
+* ⏱️ **Periodic Timing Execution:** High-precision thread interval execution cycles using FreeRTOS.
+* 🛠️ **NXP MCUXpresso Integration:** Direct integration into official SDK environments.
+* 🔐 **Static IPv4 Addressing:** Secure, deterministic static IP configuration layout parameters.
 
 
 ## ***🧱 Software Architecture*** 
