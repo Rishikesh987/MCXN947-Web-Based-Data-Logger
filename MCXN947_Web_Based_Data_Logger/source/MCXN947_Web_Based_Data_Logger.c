@@ -20,6 +20,7 @@
 /*include service */
 #include "HealthMonitor_service.h"
 #include "Analog_service.h"
+#include "Data_Logger_service.h"
 #include "ethrnet_service.h"
 
 /*include app  service */
@@ -49,9 +50,10 @@ int main(void) {
 	PRINTF("     MCXN947 WEB-BASED DATA LOGGER\r\n");
 	PRINTF("========================================\r\n");
 
-	PRINTF("[BOOT] Peripheral initialization started\r\n");
+	PRINTF("[BOOT] Service initialization started\r\n");
 	Init_HealthMonitor_service();
 	Init_Analog_service();
+	Init_Data_Logger_service();
 	Init_ETH_service();
 
 	PRINTF("[APP ] Application initialization started\r\n");

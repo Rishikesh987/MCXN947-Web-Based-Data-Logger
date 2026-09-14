@@ -38,13 +38,13 @@ static void Analog_TASK() {
 			Reset_HeltMonit_service(Analog_TaskId); /* Reset the health monitor service for this task */
 		}
 		/*Read temperature and pressure*/
-		if (BMP280_ReadTempPressure(EXAMPLE_I2C_MASTER, &sensor, &temp,
+		if (BMP280_ReadTempPressure(BMP280_I2C_MASTER, &sensor, &temp,
 				&pressure) != kBmp280_Ok) {
 			PRINTF("[Analog][ERROR] BMP280_ReadTempPressure\r\n");
 		}
 
 		/*Read time from RTC*/
-		if (DS3231_ReadTime(EXAMPLE_I2C_MASTER, &t) != kStatus_Success) {
+		if (DS3231_ReadTime(DS3231_I2C_MASTER, &t) != kStatus_Success) {
 			PRINTF("[Analog][ERROR] DS3231_ReadTime\r\n");
 		}
 
@@ -56,36 +56,15 @@ static void Analog_TASK() {
 
 void Init_Analog_service() {
 
-	lpi2c_master_config_t masterConfig;
-
-	LPI2C2_InitPins();
-	/*
-	 * masterConfig.debugEnable = false;
-	 * masterConfig.ignoreAck = false;
-	 * masterConfig.pinConfig = kLPI2C_2PinOpenDrain;
-	 * masterConfig.baudRate_Hz = 100000U;
-	 * masterConfig.busIdleTimeout_ns = 0;
-	 * masterConfig.pinLowTimeout_ns = 0;
-	 * masterConfig.sdaGlitchFilterWidth_ns = 0;
-	 * masterConfig.sclGlitchFilterWidth_ns = 0;
-	 */
-	LPI2C_MasterGetDefaultConfig(&masterConfig);
-	/* Change the default baudrate configuration */
-	masterConfig.baudRate_Hz = LPI2C_BAUDRATE;
-	/* Initialize the LPI2C master peripheral */
-	LPI2C_MasterInit(EXAMPLE_I2C_MASTER, &masterConfig,
-	LPI2C_MASTER_CLOCK_FREQUENCY);
-
 	/*  Temperature initialization  BMP280  */
-	if (BMP280_Init(EXAMPLE_I2C_MASTER, &sensor) != kBmp280_Ok) {
-		PRINTF(
-				"[Analog][ERROR] BMP280/BME280 init failed - check wiring/address\r\n");
+	if (BMP280_Init(BMP280_I2C_MASTER, &sensor) != kBmp280_Ok) {
+		PRINTF("[Analog][ERROR] BMP280/BME280 init failed - check wiring/address\r\n");
 	} else {
 		PRINTF("[Analog][OK] BMP280/BME280 init successful\r\n");
 	}
 
 	/*RTC initialization DS3121*/
-	if (RTC_SetFromCompileTime(EXAMPLE_I2C_MASTER) != kStatus_Success) {
+	if (RTC_SetFromCompileTime(DS3231_I2C_MASTER) != kStatus_Success) {
 		PRINTF("[Analog][ERROR] RTC DS3231 initialization failed\r\n");
 	} else {
 		PRINTF("[Analog][OK] RTC DS3231 initialization successful\r\n");

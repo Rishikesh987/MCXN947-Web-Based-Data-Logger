@@ -8,6 +8,7 @@
 #ifndef MY_I2C_DS3231_C_
 #define MY_I2C_DS3231_C_
 
+#include "My_I2C_driver.h"
 #include "My_I2C_DS3231.h"
 #include <string.h>
 #include <stdlib.h>
@@ -120,6 +121,8 @@ static uint8_t GetMonthFromStr(const char *mmm)
 
 status_t RTC_SetFromCompileTime(LPI2C_Type *base)
 {
+	I2C_Bus_Init(base);
+
     status_t status;
     char monStr[4];
     int day, year, hour, min, sec;

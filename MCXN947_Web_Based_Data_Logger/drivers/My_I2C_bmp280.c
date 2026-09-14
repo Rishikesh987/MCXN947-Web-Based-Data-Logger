@@ -5,7 +5,7 @@
  *      Author: rishi
  */
 
-
+#include "My_I2C_driver.h"
 #include "My_I2C_bmp280.h"
 
 /* ---- low-level helpers built on the SDK's blocking LPI2C transfer ---- */
@@ -45,6 +45,10 @@ static status_t BMP280_ReadRegs(LPI2C_Type *base, uint8_t reg, uint8_t *data, si
 
 bmp280_status_t BMP280_Init(LPI2C_Type *base, bmp280_handle_t *handle)
 {
+
+	I2C_Bus_Init(base);
+
+
     uint8_t chipId = 0;
     uint8_t calib[26] = {0};   /* 0x88..0xA1 */
     uint8_t calibH[7]  = {0};  /* 0xE1..0xE7, humidity trim (BME280) */

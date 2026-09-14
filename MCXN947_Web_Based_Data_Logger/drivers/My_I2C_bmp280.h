@@ -12,6 +12,8 @@
 #include <stdbool.h>
 #include "fsl_lpi2c.h"
 
+#define BMP280_I2C_MASTER ((LPI2C_Type *)LPI2C2_BASE)
+
 /* I2C address: SDO -> GND = 0x76, SDO -> VCC = 0x77 */
 #define BMP280_I2C_ADDR      0x76U
 

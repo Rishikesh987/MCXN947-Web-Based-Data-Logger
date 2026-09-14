@@ -1,0 +1,23 @@
+{
+  "version": 7,
+  "cmakeMinimumRequired": {
+    "major": 3
+  },
+  "configurePresets": [
+    {
+      "name": "Debug-env",
+      "displayName": "Debug-env",
+      "hidden": true,
+      "environment": {
+        "ARMGCC_DIR": "/usr/local/mcuxpressoide-25.6.136/ide/tools",
+        "SdkRootDirPath": "",
+        "POSTPROCESS_UTILITY": "/home/rishi/.mcuxpressotools/mcux-fixelf-14.2.2/mcux-fixelf",
+        "MCUX_VENV_PATH": "",
+        "PATH": "$env{MCUX_VENV_PATH}${pathListSep}$penv{PATH}",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+      },
+      "cacheVariables": {}
+    }
+  ],
+  "buildPresets": []
+}

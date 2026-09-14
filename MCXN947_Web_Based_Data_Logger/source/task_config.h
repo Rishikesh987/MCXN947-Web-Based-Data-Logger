@@ -37,7 +37,7 @@
  ******************************************************************************/
 #define PERIOD_MONITOR_TASK_MS     (10U)   /* Monitor loop checks statuses every 10ms */
 #define PERIOD_ANALOG_RTC_TASK_MS  (100U)  /* Sensors sample every 100ms */
-#define PERIOD_DATA_LOGGER_TASK_MS (200U)  /* Historical logging evaluated every 200ms */
+#define PERIOD_DATA_LOGGER_TASK_MS (50U)  /* Historical logging evaluated every 200ms */
 #define PERIOD_COMM_TASK_MS        (100U)   /* Network stack loops tightly to capture packets */
 #define PERIOD_INDICATOR_TASK_MS   (10U)   /* LED matrix processing tick baseline */
 
