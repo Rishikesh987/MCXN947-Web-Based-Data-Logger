@@ -76,3 +76,22 @@ MCXN947-based IoT embedded system using FreeRTOS and lwIP Ethernet networking, w
 │                      🛠️ NXP MCUXpresso SDK & HAL                            │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
+
+## 🗺️ Project Status & Roadmap
+
+### ✅ Completed Tasks (What is Done)
+- [x] **Layered Software Architecture:** Complete decoupling across Application, Service, and Driver/HAL modules.
+- [x] **Multitasking Kernel:** Deterministic FreeRTOS configuration executing periodic thread cycles.
+- [x] **TCP/IP Network Stack:** Integration of the `lwIP` protocol suite with static IPv4 addressing.
+- [x] **Dual Sensor Framework:** Custom I²C peripheral drivers for temperature and pressure acquisition (BMP280/BME280).
+- [x] **Chronological Indexing:** DS3231 external RTC tracking service supplying timestamp arrays.
+- [x] **Data Logging Buffers:** Routed `Sensor Service` outputs into internal RAM circular buffers managed by the `Logger Service`.
+- [x] **EEPROM Storage Scheduler:** Completed page-write scheduling logic inside the `Logger Service` for persistent logging to external EEPROM.
+- [x] **System Diagnostics:** Asynchronous system health tracking mapped via modular LED status blink codes.
+
+### ⏳ Pending Actions (What is Remaining)
+- [ ] **HTTP Daemon Processing:** Complete the background JSON parsing engine for browser-to-MCU data streams.
+- [ ] **Bi-Directional Remote Control:** Wire incoming web dashboard packets to physical actuator/motor GPIO states.
+- [ ] **Web Data Visualizer:** Build the HTML5/JavaScript dashboard files to render real-time graphs.
+
+---
