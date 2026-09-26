@@ -26,6 +26,8 @@ MCXN947-based IoT embedded system using FreeRTOS and lwIP Ethernet networking, w
 * 🛠️ **NXP MCUXpresso Integration:** Direct integration into official SDK environments.
 * 🔐 **Static IPv4 Addressing:** Secure, deterministic static IP configuration layout parameters.
 
+<img width="1919" height="823" alt="image" src="https://github.com/user-attachments/assets/cef34454-5c77-4df4-beae-8e2c0cf13ce5" />
+
 
 ## ***🧱 Software Architecture*** 
 
@@ -88,10 +90,7 @@ MCXN947-based IoT embedded system using FreeRTOS and lwIP Ethernet networking, w
 - [x] **Data Logging Buffers:** Routed `Sensor Service` outputs into internal RAM circular buffers managed by the `Logger Service`.
 - [x] **EEPROM Storage Scheduler:** Completed page-write scheduling logic inside the `Logger Service` for persistent logging to external EEPROM.
 - [x] **System Diagnostics:** Asynchronous system health tracking mapped via modular LED status blink codes.
-
-### ⏳ Pending Actions (What is Remaining)
-- [ ] **HTTP Daemon Processing:** Complete the background JSON parsing engine for browser-to-MCU data streams.
-- [ ] **Bi-Directional Remote Control:** Wire incoming web dashboard packets to physical actuator/motor GPIO states.
-- [ ] **Web Data Visualizer:** Build the HTML5/JavaScript dashboard files to render real-time graphs.
+- [X] **HTTP Daemon Processing:** Complete the background JSON parsing engine for browser-to-MCU data streams.
+- [X] **Bi-Directional Remote Control:** Wire incoming web dashboard packets to physical actuator/motor GPIO states.
 
 ---
