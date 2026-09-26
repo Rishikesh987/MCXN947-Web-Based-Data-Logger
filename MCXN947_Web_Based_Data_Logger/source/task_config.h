@@ -20,7 +20,7 @@
 #define PRIO_ANALOG_RTC_TASK       (configMAX_PRIORITIES - 2)  /*  High */
 #define PRIO_DATA_LOGGER_TASK      (configMAX_PRIORITIES - 3)  /*  Medium */
 #define PRIO_COMM_TASK             (configMAX_PRIORITIES - 4)  /*  Low-Medium */
-                                                               /*  5 to 7 reserved */                         
+#define PRIO_WEB_APP_TASK        (configMAX_PRIORITIES - 5)  /*  Lowest */                                                              /*  5 to 7 reserved */
 #define PRIO_INDICATOR_TASK        (configMAX_PRIORITIES - 8)  /*  Lowest */
 
 /*******************************************************************************
@@ -31,6 +31,8 @@
 #define STACK_DATA_LOGGER_TASK     (512U)  /* Larger for EEPROM page/history filtering */
 #define STACK_COMM_TASK            (3072U) /* Heavy stack space required for lwIP & HTTP packets */
 #define STACK_INDICATOR_TASK       (256U)  /* Increased from 128 to safely support PRINTF text layout */
+#define STACK_WEB_HTTP_TASK        (3072U) /* HTTP handler: same as COMM - holds lwIP socket + snprintf buffers */
+#define STACK_WEB_APP_TASK         (256U)  /* WebApp glue task: only reads floats and calls UpdateSensorData */
 
 /*******************************************************************************
  *  Task Run Periods (How often the loops execute)
@@ -39,7 +41,8 @@
 #define PERIOD_ANALOG_RTC_TASK_MS  (100U)  /* Sensors sample every 100ms */
 #define PERIOD_DATA_LOGGER_TASK_MS (50U)  /* Historical logging evaluated every 200ms */
 #define PERIOD_COMM_TASK_MS        (100U)   /* Network stack loops tightly to capture packets */
-#define PERIOD_INDICATOR_TASK_MS   (10U)   /* LED matrix processing tick baseline */
+#define PERIOD_INDICATOR_TASK_MS   (10U)    /* LED matrix processing tick baseline */
+#define PERIOD_WEB_APP_TASK_MS     (500U)   /* WebApp glue: push sensor data to HTTP layer every 500ms */
 
 /*******************************************************************************
  *  HMS Watchdog Timeout Constraints (In Milliseconds)
@@ -50,6 +53,7 @@
 #define HMS_TIMEOUT_ANALOG_RTC_MS  (300U)  /* 3x run period: allows 2 missed loops before reset */
 #define HMS_TIMEOUT_DATA_LOGGER_MS (600U)  /* 3x run period: absorbs long I2C EEPROM write delays */
 #define HMS_TIMEOUT_COMM_MS        (1000U) /* 1 Second: protects against heavy TCP server blocking spikes */
+#define HMS_TIMEOUT_WEB_MS         (1000U) /* Same ceiling as COMM: HTTP accept loop heartbeats every 200ms */
 #define HMS_TIMEOUT_INDICATOR_MS   (200U)  /* Safe window: completely avoids false resets */
 
 #endif /* APP_TASK_CONFIG_H_ */

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCXN947 Temperature Logger</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Temperature Monitor</h1>
+
+        <!-- Status Indicator -->
+        <div class="status-bar">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="statusText">Connecting...</span>
+        </div>
+
+        <!-- Temperature Display -->
+        <div class="temperature">
+            <h2>Temperature</h2>
+            <p id="temperature">-- °C</p>
+            <p class="last-update" id="lastUpdate">Last update: never</p>
+        </div>
+
+        <!-- Control Buttons -->
+        <div class="control-section">
+            <h3>System Control</h3>
+            <div class="button-group">
+                <button class="btn btn-success" onclick="sendCommand('on')">Turn ON</button>
+                <button class="btn btn-danger" onclick="sendCommand('off')">Turn OFF</button>
+            </div>
+        </div>
+
+        <!-- Debug / Raw Data (optional) -->
+        <div class="debug-section">
+            <details>
+                <summary>Raw Data</summary>
+                <pre id="rawData">Waiting for MCU...</pre>
+            </details>
+        </div>
+
+        <p id="status"></p>
+    </div>
+
+    <script>
+        // Configuration
+        const MCU_IP = 'http://192.168.0.102';  // Change to your MCU's IP
+        const POLL_INTERVAL = 2000;             // 2 seconds
+        let pollTimer = null;
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            startPolling();
+        });
+
+        // Main polling loop
+        function startPolling() {
+            fetchTemperature();  // Fetch immediately
+            pollTimer = setInterval(fetchTemperature, POLL_INTERVAL);
+        }
+
+        // Fetch temperature from MCU
+        function fetchTemperature() {
+            fetch(`${MCU_IP}/api/sensor`)
+                .then(response => {
+                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                    return response.json();
+                })
+                .then(data => {
+                    updateDisplay(data);
+                    setStatus(true, 'Connected');
+                })
+                .catch(error => {
+                    console.error('Fetch error:', error);
+                    setStatus(false, 'Offline');
+                    document.getElementById('temperature').textContent = '-- °C';
+                });
+        }
+
+        // Update temperature display
+        function updateDisplay(data) {
+            const temp = data.temp || data.temperature;  // Handle different field names
+            if (temp !== undefined) {
+                document.getElementById('temperature').textContent = 
+                    temp.toFixed(1) + ' °C';
+            }
+            
+            // Update last-update timestamp
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString();
+            document.getElementById('lastUpdate').textContent = 
+                `Last update: ${timeStr}`;
+            
+            // Show raw JSON for debugging
+            document.getElementById('rawData').textContent = 
+                JSON.stringify(data, null, 2);
+        }
+
+        // Send control command to MCU
+        function sendCommand(command) {
+            const btn = event.target;
+            btn.disabled = true;
+            btn.textContent = 'Sending...';
+
+            fetch(`${MCU_IP}/api/control`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ command: command })
+            })
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                return response.json();
+            })
+            .then(data => {
+                console.log('MCU response:', data);
+                document.getElementById('status').textContent = 
+                    `Command "${command}" sent successfully`;
+                setTimeout(() => {
+                    btn.disabled = false;
+                    btn.textContent = command === 'on' ? 'Turn ON' : 'Turn OFF';
+                }, 800);
+            })
+            .catch(error => {
+                console.error('Command error:', error);
+                document.getElementById('status').textContent = 
+                    `Error sending command: ${error.message}`;
+                btn.disabled = false;
+                btn.textContent = command === 'on' ? 'Turn ON' : 'Turn OFF';
+            });
+        }
+
+        // Update status indicator
+        function setStatus(isConnected, text) {
+            const dot = document.getElementById('statusDot');
+            const statusText = document.getElementById('statusText');
+            
+            if (isConnected) {
+                dot.className = 'status-dot connected';
+                statusText.textContent = text;
+                statusText.style.color = '#27ae60';  // Green
+            } else {
+                dot.className = 'status-dot disconnected';
+                statusText.textContent = text;
+                statusText.style.color = '#e74c3c';  // Red
+            }
+        }
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            if (pollTimer) clearInterval(pollTimer);
+        });
+    </script>
+
+</body>
+</html>

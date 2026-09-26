@@ -25,7 +25,9 @@
 
 /*include app  service */
 #include "Indectors_service.h"
-#include "temp.h"
+#include "Web_service.h"
+
+#include "../app/MainApp/MainApp.h"
 
 /* TODO: insert other include files here. */
 
@@ -59,8 +61,8 @@ int main(void) {
 	PRINTF("[APP ] Application initialization started\r\n");
 
 	Init_Indicator_Task();
-	Init_Temperature_TASK();
-
+	Init_MainApp_TASK();
+	WebService_Init();
 	PRINTF("[RTOS] Starting FreeRTOS scheduler...\r\n");
 	PRINTF("========================================\r\n");
 	vTaskStartScheduler();

@@ -40,12 +40,12 @@ static void Analog_TASK() {
 		/*Read temperature and pressure*/
 		if (BMP280_ReadTempPressure(BMP280_I2C_MASTER, &sensor, &temp,
 				&pressure) != kBmp280_Ok) {
-			PRINTF("[Analog][ERROR] BMP280_ReadTempPressure\r\n");
+		//	PRINTF("[Analog][ERROR] BMP280_ReadTempPressure\r\n");
 		}
 
 		/*Read time from RTC*/
 		if (DS3231_ReadTime(DS3231_I2C_MASTER, &t) != kStatus_Success) {
-			PRINTF("[Analog][ERROR] DS3231_ReadTime\r\n");
+			//PRINTF("[Analog][ERROR] DS3231_ReadTime\r\n");
 		}
 
 		/* Run every 100 ms */

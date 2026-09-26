@@ -154,8 +154,8 @@ void Init_HealthMonitor_service() {
 	/* Check if reset is due to Watchdog */
 	if (IS_WWDT_RESET) {
 		PRINTF("[WWDT][ERROR]Watchdog reset occurred !!!\r\n");
-		timeOutResetEnable = false;
-		__BKPT(0);
+		//timeOutResetEnable = false;
+		//__BKPT(0);
 	}
 	/* The WDT divides the input frequency into it by 4 */
 	wdtFreq = WDT_CLK_FREQ / 4;

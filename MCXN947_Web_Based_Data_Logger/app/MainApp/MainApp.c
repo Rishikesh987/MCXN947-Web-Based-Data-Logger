@@ -1,6 +1,6 @@
 
 /*
- * temp.c
+ * MainApp.c
  *
  *  Created on: Aug 29, 2026
  *      Author: rishi
@@ -19,7 +19,10 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "HealthMonitor_service.h"
-#include "../../services/Analog_service/Analog_service.h"
+#include "Analog_service.h"
+#include "Indectors_service.h"
+#include "Web_service.h"
+
 /*******************************************************************************
  * Task Configuration
  ******************************************************************************/
@@ -44,7 +47,7 @@ static uint8_t App_TaskId;
  * vTaskDelayUntil() is used to maintain a stable periodic execution
  * time regardless of small variations in task execution time.
  */
-static void Temperature_TASK()
+static void MainApp_TASK()
 {
     TickType_t xLastWakeTime;
     const TickType_t xPeriod = pdMS_TO_TICKS(100);
@@ -58,12 +61,21 @@ static void Temperature_TASK()
         if (xTaskNotifyWait(0x00, 0xFFFFFFFF, &receivedBits, 0) == pdPASS) {
             Reset_HeltMonit_service(App_TaskId); /* Reset the health monitor service for this task */
         }
-        /* Task1 code */
-    	PRINTF("Time: 20%02d-%02d-%02d %02d:%02d:%02d\r\n",
-    	               t.year, t.month, t.date, t.hour, t.min, t.sec);
+        /* MainApp code */
+
+        WebService_UpdateSensorData(temp,pressure);
+
+        if(g_web_control_active == 1 )
+        {
+        	led_service_set_solid(LED_1,1);
+        }
+        if(g_web_control_active == 0 )
+        {
+        	led_service_set_solid(LED_1,0);
+        }
     	if(temp <= 2500){
-    		PRINTF("Temperature ok\r\n");
-    	    PRINTF("Temp: %d C   Pressure: %d hPa\r\n", (uint32_t)temp*100, (uint32_t)pressure);
+    		//PRINTF("Temperature ok\r\n");
+    	    //PRINTF("Temp: %d C   Pressure: %d hPa\r\n", (uint32_t)temp*100, (uint32_t)pressure);
     	}
     	else{
     		PRINTF("Temperature not ok \r\n");
@@ -86,22 +98,22 @@ static void Temperature_TASK()
  * scheduler.
  */
 
-void Init_Temperature_TASK(){
+void Init_MainApp_TASK(){
 
-	PRINTF("[RTOS] Creating Temperature Application Task...\r\n");
+	PRINTF("[RTOS] Creating Main Application Task...\r\n");
 
 	/* Register application task with health monitor - 300ms timeout */
-	App_TaskId = Registor_service("Temperature_TASK", 300, true, &App_Handle);
+	App_TaskId = Registor_service("MainApp_TASK", 300, true, &App_Handle);
 
-    if (xTaskCreate(Temperature_TASK, "Temperature_TASK", TASK_1_STACK_SIZE, NULL, TASK_1_PRIORITY, &App_Handle) !=
+    if (xTaskCreate(MainApp_TASK, "MainApp_TASK", TASK_1_STACK_SIZE, NULL, TASK_1_PRIORITY, &App_Handle) !=
         pdPASS)
     {
-    	PRINTF("[RTOS][ERROR] Temperature task creation FAILED!\r\n");
+    	PRINTF("[RTOS][ERROR] MainApp task creation FAILED!\r\n");
 
     }
     else
     {
-    	PRINTF("[RTOS][OK] Temperature task created successfully\r\n");
+    	PRINTF("[RTOS][OK] MainApp task created successfully\r\n");
     }
 
 }
